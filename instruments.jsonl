@@ -1,0 +1,157 @@
+{"name": "guitar", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "acoustic guitar", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "electric guitar", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "bass guitar", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "classical guitar", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "ukulele", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "banjo", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "mandolin", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "harp", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "lute", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "sitar", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "oud", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "violin", "type": "string", "subtype": "bowed", "family": "chordophone"}
+{"name": "viola", "type": "string", "subtype": "bowed", "family": "chordophone"}
+{"name": "cello", "type": "string", "subtype": "bowed", "family": "chordophone"}
+{"name": "double bass", "type": "string", "subtype": "bowed", "family": "chordophone"}
+{"name": "erhu", "type": "string", "subtype": "bowed", "family": "chordophone"}
+{"name": "dulcimer", "type": "string", "subtype": "struck", "family": "chordophone"}
+{"name": "zither", "type": "string", "subtype": "struck", "family": "chordophone"}
+{"name": "electric bass", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "bass", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "piano", "type": "keyboard", "subtype": "struck", "family": "chordophone"}
+{"name": "grand piano", "type": "keyboard", "subtype": "struck", "family": "chordophone"}
+{"name": "upright piano", "type": "keyboard", "subtype": "struck", "family": "chordophone"}
+{"name": "electric piano", "type": "keyboard", "subtype": "struck", "family": "chordophone"}
+{"name": "digital piano", "type": "keyboard", "subtype": null, "family": "electrophone"}
+{"name": "keyboard", "type": "keyboard", "subtype": null, "family": "electrophone"}
+{"name": "synthesizer", "type": "keyboard", "subtype": "electronic", "family": "electrophone"}
+{"name": "organ", "type": "keyboard", "subtype": "pipe", "family": "aerophone"}
+{"name": "electric organ", "type": "keyboard", "subtype": "electronic", "family": "electrophone"}
+{"name": "accordion", "type": "keyboard", "subtype": "free reed", "family": "aerophone"}
+{"name": "melodica", "type": "keyboard", "subtype": "free reed", "family": "aerophone"}
+{"name": "harpsichord", "type": "keyboard", "subtype": "plucked", "family": "chordophone"}
+{"name": "clavichord", "type": "keyboard", "subtype": "struck", "family": "chordophone"}
+{"name": "flute", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "piccolo", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "oboe", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "clarinet", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "bass clarinet", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "bassoon", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "contrabassoon", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "saxophone", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "alto saxophone", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "tenor saxophone", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "soprano saxophone", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "baritone saxophone", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "recorder", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "tin whistle", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "harmonica", "type": "wind", "subtype": "free reed", "family": "aerophone"}
+{"name": "bagpipe", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "trumpet", "type": "wind", "subtype": "brass", "family": "aerophone"}
+{"name": "cornet", "type": "wind", "subtype": "brass", "family": "aerophone"}
+{"name": "flugelhorn", "type": "wind", "subtype": "brass", "family": "aerophone"}
+{"name": "trombone", "type": "wind", "subtype": "brass", "family": "aerophone"}
+{"name": "bass trombone", "type": "wind", "subtype": "brass", "family": "aerophone"}
+{"name": "french horn", "type": "wind", "subtype": "brass", "family": "aerophone"}
+{"name": "tuba", "type": "wind", "subtype": "brass", "family": "aerophone"}
+{"name": "sousaphone", "type": "wind", "subtype": "brass", "family": "aerophone"}
+{"name": "euphonium", "type": "wind", "subtype": "brass", "family": "aerophone"}
+{"name": "bugle", "type": "wind", "subtype": "brass", "family": "aerophone"}
+{"name": "drum", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "drum kit", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "snare drum", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "bass drum", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "tom", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "conga drum", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "bongo", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "djembe", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "cajon", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "tabla", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "timpani", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "hand drum", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "xylophone", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "marimba", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "vibraphone", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "glockenspiel", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "steel drum", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "cymbal", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "hi-hat", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "tambourine", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "triangle", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "cowbell", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "castanets", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "maracas", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "claves", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "woodblock", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "agogo", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "kalimba", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "bells", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "handpan", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "singing bowl", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "drum machine", "type": "electronic", "subtype": null, "family": "electrophone"}
+{"name": "sampler", "type": "electronic", "subtype": null, "family": "electrophone"}
+{"name": "theremin", "type": "electronic", "subtype": null, "family": "electrophone"}
+{"name": "midi controller", "type": "electronic", "subtype": null, "family": "electrophone"}
+{"name": "turntable", "type": "electronic", "subtype": null, "family": "electrophone"}
+{"name": "electronic drum", "type": "electronic", "subtype": null, "family": "electrophone"}
+{"name": "drum pad", "type": "electronic", "subtype": null, "family": "electrophone"}
+{"name": "keytar", "type": "keyboard", "subtype": "electronic", "family": "electrophone"}
+{"name": "stage piano", "type": "keyboard", "subtype": null, "family": "electrophone"}
+{"name": "autoharp", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "charango", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "cuatro", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "guqin", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "guzheng", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "lyre", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "psaltery", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "requinto", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "tanpura", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "dobro", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "lap steel guitar", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "pedal steel guitar", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "resonator guitar", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "baritone guitar", "type": "string", "subtype": "plucked", "family": "chordophone"}
+{"name": "electric violin", "type": "string", "subtype": "bowed", "family": "chordophone"}
+{"name": "upright bass", "type": "string", "subtype": "bowed", "family": "chordophone"}
+{"name": "alto flute", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "dizi", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "flageolet", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "hulusi", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "ocarina", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "pan flute", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "quena", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "shinobue", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "didgeridoo", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "duduk", "type": "wind", "subtype": "woodwind", "family": "aerophone"}
+{"name": "baritone horn", "type": "wind", "subtype": "brass", "family": "aerophone"}
+{"name": "shofar", "type": "wind", "subtype": "brass", "family": "aerophone"}
+{"name": "conch shell", "type": "wind", "subtype": "brass", "family": "aerophone"}
+{"name": "bodhran", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "darbuka", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "doumbek", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "frame drum", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "pandeiro", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "taiko drum", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "timbales", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "udu drum", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "ocean drum", "type": "percussion", "subtype": "membranophone", "family": "membranophone"}
+{"name": "cabasa", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "chimes", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "finger cymbals", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "gong", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "guiro", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "guira", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "handbell", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "jaw harp", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "kazoo", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "log drum", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "rainstick", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "sansula", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "shaker", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "slapstick", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "steel tongue drum", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "tongue drum", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "tubular bells", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "washboard", "type": "percussion", "subtype": "idiophone", "family": "idiophone"}
+{"name": "microphone", "type": "accessory", "subtype": "amplification", "family": null}
