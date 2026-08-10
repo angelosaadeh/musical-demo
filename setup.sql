@@ -25,6 +25,10 @@ DECLARE
     col_list TEXT;
     final_col_list TEXT;
 BEGIN
+    -- Leftovers from a failed earlier run would make the CREATEs below fail.
+    DROP TABLE IF EXISTS new_table;
+    DROP TABLE IF EXISTS final_table;
+
     SELECT oid INTO choose_oid FROM pg_proc WHERE proname = 'choose' LIMIT 1;
 
     SELECT string_agg(
@@ -40,6 +44,8 @@ BEGIN
       AND NOT attisdropped;
 
     EXECUTE format('CREATE TABLE new_table AS SELECT row_number() OVER () AS rn, %s FROM %I', col_list, _tbl);
+    -- Without this the per-row UPDATE below scans the whole table each time.
+    EXECUTE 'CREATE INDEX ON new_table(rn)';
 
     FOR row_record IN EXECUTE format('SELECT row_number() OVER () AS rn, %I::jsonb AS candidates FROM %I', _col, _tbl) LOOP
     DECLARE
@@ -65,7 +71,9 @@ BEGIN
                 cumulative_gate := ARRAY[gate];
                 best_answer := answer;
             ELSE
-                PERFORM set_prob(gate, prob / cumulative_prob);
+                -- LEAST guards the case where cumulative_prob has shrunk enough
+                -- that the conditional probability would exceed 1.
+                PERFORM set_prob(gate, LEAST(prob / cumulative_prob, 1.0));
                 semimods := semimods || provenance_semimod(
                     answer,
                     provenance_monus(gate, provenance_plus(cumulative_gate))
@@ -178,3 +186,10 @@ SELECT build_provenance('reviews', 'sentiment');
 
 SELECT add_provenance('musical');
 SELECT add_provenance('reviews');
+
+-- build_provenance rebuilds each table with CREATE TABLE AS, which does not
+-- carry over the primary key or its index. Re-create the lookup indexes the
+-- demo's joins rely on (reviews.asin is not unique, so it takes an index
+-- rather than a primary key).
+CREATE INDEX IF NOT EXISTS musical_asin_idx ON musical(asin);
+CREATE INDEX IF NOT EXISTS reviews_asin_idx ON reviews(asin);
