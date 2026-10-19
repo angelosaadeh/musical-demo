@@ -4,7 +4,7 @@ JSON keys are matched to the table's columns by name; any extra keys in the
 file are ignored, and dict/list values are stored as JSONB. One loader for all
 three tables.
 
-    python3 populate.py <table> <file.jsonl> [--db amazon] [--user angelo]
+    python3 populate.py <table> <file.jsonl> [--db amazon]
 """
 import json
 import argparse

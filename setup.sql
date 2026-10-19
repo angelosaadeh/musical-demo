@@ -60,7 +60,7 @@ BEGIN
         FOR answer, prob IN
             SELECT key, value::FLOAT
             FROM jsonb_each_text(row_record.candidates)
-            ORDER BY value::FLOAT DESC
+            ORDER BY value::FLOAT DESC, key
             LIMIT 5
         LOOP
             gate := uuid_generate_v4();
@@ -167,14 +167,14 @@ UPDATE musical SET is_instrument = (
 DROP TABLE IF EXISTS musical_det;
 CREATE TABLE musical_det AS
 SELECT asin, title, average_rating, price,
-       (SELECT key FROM jsonb_each_text(instrument)    ORDER BY value::float DESC LIMIT 1) AS instrument,
-       (SELECT key FROM jsonb_each_text(is_instrument) ORDER BY value::float DESC LIMIT 1) AS is_instrument
+       (SELECT key FROM jsonb_each_text(instrument)    ORDER BY value::float DESC, key LIMIT 1) AS instrument,
+       (SELECT key FROM jsonb_each_text(is_instrument) ORDER BY value::float DESC, key LIMIT 1) AS is_instrument
 FROM musical;
 
 DROP TABLE IF EXISTS reviews_det;
 CREATE TABLE reviews_det AS
 SELECT asin, rating, text,
-       (SELECT key FROM jsonb_each_text(sentiment) ORDER BY value::float DESC LIMIT 1) AS sentiment
+       (SELECT key FROM jsonb_each_text(sentiment) ORDER BY value::float DESC, key LIMIT 1) AS sentiment
 FROM reviews;
 
 -- ───────────────────────────────────────────────────────────────────────────

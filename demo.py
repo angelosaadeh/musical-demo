@@ -113,7 +113,7 @@ def show_results(key):
         return
     df, elapsed, notices, methods = st.session_state[key]
     st.write(f"{len(df)} rows found")
-    st.dataframe(df, use_container_width=True)
+    st.dataframe(df, width="stretch")
     show_query_info(elapsed, notices, methods)
 
 
@@ -132,7 +132,7 @@ def show_comparison(det_key, toggle_key):
             st.error(f"Deterministic query failed: {error}")
         return
     st.write(f"{len(df)} rows found (deterministic)")
-    st.dataframe(df, use_container_width=True)
+    st.dataframe(df, width="stretch")
     st.caption(f"⏱ {elapsed:.3f} s")
 
 
@@ -168,7 +168,8 @@ with tab1:
                         SELECT r.asin, r.rating, r.text, r.sentiment,
                                probability_evaluate(provenance()) AS probability
                         FROM reviews r
-                        WHERE r.sentiment = %s AND r.rating IN %s
+                        WHERE r.sentiment = %s::text AND r.rating IN %s
+                        OFFSET 0
                     ) sub
                     WHERE probability BETWEEN %s AND %s
                     ORDER BY probability DESC
@@ -202,7 +203,8 @@ with tab2:
                         SELECT m.asin, m.title,
                                probability_evaluate(provenance()) AS probability
                         FROM musical m
-                        WHERE m.is_instrument = 'yes'
+                        WHERE m.is_instrument = 'yes'::text
+                        OFFSET 0
                     ) s WHERE probability BETWEEN %s AND %s
                 ) yes
                 JOIN (
@@ -210,7 +212,8 @@ with tab2:
                         SELECT m.asin,
                                probability_evaluate(provenance()) AS probability
                         FROM musical m
-                        WHERE m.is_instrument = 'no'
+                        WHERE m.is_instrument = 'no'::text
+                        OFFSET 0
                     ) s WHERE probability BETWEEN %s AND %s
                 ) no ON yes.asin = no.asin
                 ORDER BY yes.probability DESC
@@ -240,9 +243,10 @@ with tab3:
                            probability_evaluate(provenance()) AS probability
                     FROM musical m
                     JOIN instruments i ON m.instrument = i.name
-                    WHERE m.is_instrument = %s AND m.price BETWEEN %s AND %s
+                    WHERE m.is_instrument = %s::text AND m.price BETWEEN %s AND %s
                     GROUP BY m.asin, m.title, m.price
                     HAVING choose(i.type) = %s
+                    OFFSET 0
                 ) sub
                 WHERE probability BETWEEN %s AND %s
                 ORDER BY probability DESC
@@ -269,21 +273,40 @@ with tab4:
         itype4 = st.selectbox("Instrument type:", ["wind", "string", "keyboard", "percussion", "electronic"])
         min_prob4, max_prob4 = st.slider("Probability range", 0.0, 1.0, (0.0, 1.0))
         if st.form_submit_button("▶ Run"):
-            df4, elapsed4, notices4, methods4 = run_query("""
-                SELECT asin, title, average_rating,
-                       avg(probability) AS probability
-                FROM (
-                    SELECT m.asin, m.title, m.average_rating,
-                           probability_evaluate(provenance()) AS probability
-                    FROM musical m
-                    JOIN instruments i ON m.instrument = i.name
-                    JOIN reviews r ON m.asin = r.asin
-                    WHERE m.is_instrument = %s AND r.sentiment = %s
-                    GROUP BY m.asin, m.title, m.average_rating, r.rating, r.text
-                    HAVING choose(i.type) = %s
-                ) inner_sub
-                GROUP BY asin, title, average_rating
-            """, (is_instrument4, sentiment4, itype4))
+            # Pass 1: cheap per-product probability of "right type and
+            # instrument/accessory", used to drop products below the lower
+            # bound before the expensive review join.
+            bound4, elapsed_a, _, _ = run_query("""
+                SELECT m.asin, probability_evaluate(provenance()) AS probability
+                FROM musical m
+                JOIN instruments i ON m.instrument = i.name
+                WHERE m.is_instrument = %s::text AND i.type = %s
+                GROUP BY m.asin
+                HAVING choose(i.type) = %s
+            """, (is_instrument4, itype4, itype4))
+            bound4["probability"] = pd.to_numeric(bound4["probability"], errors="coerce")
+            keep4 = tuple(bound4.loc[bound4["probability"] >= min_prob4 - 1e-9, "asin"])
+            if keep4:
+                df4, elapsed_b, notices4, methods4 = run_query("""
+                    SELECT asin, title, average_rating,
+                           avg(probability) AS probability
+                    FROM (
+                        SELECT m.asin, m.title, m.average_rating,
+                               probability_evaluate(provenance()) AS probability
+                        FROM musical m
+                        JOIN instruments i ON m.instrument = i.name
+                        JOIN reviews r ON m.asin = r.asin
+                        WHERE m.is_instrument = %s::text AND r.sentiment = %s::text
+                          AND i.type = %s AND m.asin IN %s
+                        GROUP BY m.asin, m.title, m.average_rating, r.rating, r.text
+                        HAVING choose(i.type) = %s
+                    ) inner_sub
+                    GROUP BY asin, title, average_rating
+                """, (is_instrument4, sentiment4, itype4, keep4, itype4))
+            else:
+                df4, elapsed_b, notices4, methods4 = (
+                    pd.DataFrame(columns=["asin", "title", "average_rating", "probability"]), 0.0, [], None)
+            elapsed4 = elapsed_a + elapsed_b
             # avg(probability) comes back as text; pull out the number, then
             # apply the probability-range filter and sort in pandas.
             df4["probability"] = pd.to_numeric(
@@ -294,16 +317,24 @@ with tab4:
             df4 = df4.sort_values("probability", ascending=False)
             st.session_state["res4"] = (df4, elapsed4, notices4, methods4)
             st.session_state["det4"] = run_det_query("""
-                SELECT DISTINCT md.asin, md.title, md.average_rating, md.instrument
-                FROM (
-                    SELECT m.asin, m.title, m.average_rating, m.instrument
-                    FROM musical_det m
-                    JOIN instruments i ON m.instrument = i.name
-                    WHERE m.is_instrument = %s AND i.type = %s
-                ) md
-                JOIN reviews_det r ON md.asin = r.asin
-                WHERE r.sentiment = %s
-            """, (is_instrument4, itype4, sentiment4))
+                SELECT m.asin, m.title, m.average_rating, m.instrument
+                FROM musical_det m
+                JOIN instruments i ON m.instrument = i.name
+                JOIN (
+                    SELECT asin
+                    FROM (
+                        SELECT asin, sentiment,
+                               rank() OVER (PARTITION BY asin ORDER BY count(*) DESC) AS rk
+                        FROM reviews_det
+                        GROUP BY asin, sentiment
+                    ) counts
+                    GROUP BY asin
+                    HAVING count(*) FILTER (WHERE rk = 1) = 1
+                       AND bool_or(rk = 1 AND sentiment = %s)
+                ) majority ON majority.asin = m.asin
+                WHERE m.is_instrument = %s AND i.type = %s
+                ORDER BY m.title
+            """, (sentiment4, is_instrument4, itype4))
     show_results("res4")
     show_comparison("det4", "tog4")
 
@@ -369,13 +400,19 @@ def build_query_sql(from_clause, sel_defs, conditions, join_instruments, join_re
     for wcol, wop, wval in conditions:
         if wcol in CHOOSE_COLS:
             having_parts.append(f"choose({wcol}) {wop} '{wval}'")
+            if wop != "IN":
+                where_parts.append(f"{wcol} {wop} '{wval}'")
         elif wop == "IN":
-            vals = ", ".join(f"'{v.strip()}'" for v in wval.split(","))
-            where_parts.append(f"{wcol} IN ({vals})")
+            items = [v.strip() for v in wval.split(",")]
+            if all(v.lstrip("-").replace(".", "", 1).isdigit() for v in items):
+                where_parts.append(f"{wcol} IN ({', '.join(items)})")
+            else:
+                vals = ", ".join(f"'{v}'::text" for v in items)
+                where_parts.append(f"{wcol} IN ({vals})")
         elif wval.lstrip("-").replace(".", "", 1).isdigit():
             where_parts.append(f"{wcol} {wop} {wval}")
         else:
-            where_parts.append(f"{wcol} {wop} '{wval}'")
+            where_parts.append(f"{wcol} {wop} '{wval}'::text")
 
     inner_lines = [f"SELECT {(chr(10) + '               ,').join(select_exprs)}", f"FROM   {from_clause}"]
     if where_parts:
@@ -384,6 +421,7 @@ def build_query_sql(from_clause, sel_defs, conditions, join_instruments, join_re
         inner_lines.append("GROUP BY " + ", ".join(group_by_cols))
     if having_parts:
         inner_lines.append("HAVING " + "\n           AND ".join(having_parts))
+    inner_lines.append("OFFSET 0")
 
     return (
         "SELECT * FROM (\n"

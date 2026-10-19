@@ -12,6 +12,7 @@ distributions (instrument type, is_instrument, sentiment) — using
 | `demo.py`           | the Streamlit app |
 | `setup.sql`         | builds the whole `amazon` database in one pass (tables, data load, deterministic baseline tables, provenance circuits) |
 | `populate.py`       | loads a JSONL file into a Postgres table |
+| `requirements.txt`  | Python dependencies |
 | `products.jsonl`    | musical products with `instrument` / `is_instrument` distributions |
 | `reviews.jsonl`     | reviews with `sentiment` distributions |
 | `instruments.jsonl` | instrument reference table |
@@ -19,10 +20,12 @@ distributions (instrument type, is_instrument, sentiment) — using
 ## Requirements
 
 - PostgreSQL with the [ProvSQL](https://provsql.org) extension installed
-  (`shared_preload_libraries = 'provsql'`)
-- Python: `pip install streamlit psycopg2 pandas`
+  (`shared_preload_libraries = 'provsql'`, then restart the server)
+- Python: `pip install -r requirements.txt`
 
 ## Run
+
+From this directory:
 
 ```sh
 createdb amazon
